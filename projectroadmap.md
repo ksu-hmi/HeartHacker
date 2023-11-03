@@ -4,13 +4,17 @@
 - [x] Create code repository within the KHU-HMI organization
 - [x] Edit and commit changes in the readme.md file in the respository
 - [x] Explore at least one existing Python code base related to the project
-- [ ] https://github.com/YangChuan80/AusculPi-Console
-- [ ] https://github.com/Nyceane/Digital-Stethoscope-AI.git
-- [ ] Evaluate existing code and submit updates to the projectroadmap.md file explaining the findings
-- [ ] Attempt to run code with updates
+- [x] https://github.com/YangChuan80/AusculPi-Console
+- [x] https://github.com/Nyceane/Digital-Stethoscope-AI.git
+- [x] Evaluate existing code and submit updates to the projectroadmap.md file explaining the findings
+- [ ] 
+ Through my evalutation of the above code, both projects include high level code that currently at my skill level I will not be able to fully emulate. I have decided to begin with a very rudimentary version of the "Digital Stethoscope AI" audio recording code and begin from there. 
+- [x] Attempt to run code with updates
 ## Sprint 2
-- [ ] Determine which hardware will be used to create stethoscope
+- [x] Determine which hardware will be used to create stethoscope
 - [ ] Build stethoscope
+- [ ] Create a heart detection algorithm
+- [ ] Create a recording visualization
 - [ ] Make updates and add commit messages in the repository
 - [ ] Track progress on planned and emerging tasks in projectroadmap.md document.
 ## Sprint 3
