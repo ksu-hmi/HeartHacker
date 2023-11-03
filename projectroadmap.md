@@ -11,6 +11,7 @@
  Through my evalutation of the above code, both projects include high level code that currently at my skill level I will not be able to fully emulate. I have decided to begin with a very rudimentary version of the "Digital Stethoscope AI" audio recording code and begin from there. 
 - [x] Attempt to run code with updates
 ## Sprint 2
+- [x] Create audio recording code 
 - [x] Determine which hardware will be used to create stethoscope
 - [x] Build stethoscope
 - [ ] Create a heart detection algorithm
