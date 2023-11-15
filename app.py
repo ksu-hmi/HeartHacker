@@ -46,3 +46,41 @@ if __name__ == "__main__":
     wavio.write("recorded_audio.wav", audio_data, SAMPLE_RATE, sampwidth=2)
 
 
+######################################
+
+#HeartRate Detection Function 
+
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+
+# Function to detect heart rate from audio
+def detect_heart_rate(audio_data, sample_rate):
+    # Perform Fast Fourier Transform (FFT) to get frequency domain representation
+    fft_result = np.fft.fft(audio_data)
+    frequencies = np.fft.fftfreq(len(fft_result), d=1/sample_rate)
+    
+    # Keep only positive frequencies
+    positive_frequencies = frequencies[frequencies > 0]
+    positive_fft = fft_result[frequencies > 0]
+    
+    # Plot the frequency spectrum
+    plt.plot(positive_frequencies, np.abs(positive_fft))
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Amplitude')
+    plt.title('Frequency Spectrum')
+    plt.show()
+
+    # Find peaks in the frequency spectrum
+    peaks, _ = find_peaks(np.abs(positive_fft), height=500)
+
+    # Calculate heart rate based on the detected peaks
+    heart_rate = positive_frequencies[peaks[0]]
+    
+    return heart_rate
+
+if __name__ == "__main__":
+    audio_data = record_audio()
+    heart_rate = detect_heart_rate(audio_data, SAMPLE_RATE)
+    
+    print(f"Detected Heart Rate: {heart_rate} beats per minute")
+
