@@ -12,7 +12,7 @@
 - [x] Attempt to run code with updates
 ## Sprint 2
 - [x] Determine which hardware will be used to create stethoscope
-- [ ] Build stethoscope
+- [x] Build stethoscope
 - [ ] Create a heart detection algorithm
 - [ ] Create a recording visualization
 - [ ] Make updates and add commit messages in the repository
