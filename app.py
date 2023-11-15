@@ -45,3 +45,4 @@ if __name__ == "__main__":
 # Save the recorded audio to a WAV file
     wavio.write("recorded_audio.wav", audio_data, SAMPLE_RATE, sampwidth=2)
 
+
