@@ -92,7 +92,7 @@ def detect_heart_rate(audio_data, sample_rate):
     peaks, _ = find_peaks(np.abs(audio_data), height=4000)
 
     # Calculate heart rate based on the detected peaks
-    heart_rate = 60 / np.diff(time[peaks]).mean()  # Calculate heart rate from time intervals between peaks
+    heart_rate = 60 / (2 * np.diff(time[peaks]).mean())
     
     # Display heart rate on the GUI
     result_label.config(text=f"Detected Heart Rate: {heart_rate:.2f} beats per minute")
