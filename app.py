@@ -6,16 +6,17 @@ import wavio
 # Constants for audio recording including sample rate and the recording duration
 
 SAMPLE_RATE = 44100  # Sample rate in Hz
-RECORDING_DURATION = 5  # Duration of recording in seconds
+RECORDING_DURATION = 20  # Duration of recording in seconds
 
 #Creating the record_audio function- it initializes a PyAudio object, opens an audio stream with the specified parameters, records audio data for a specified duration and saves it in a list called 'frames'
-def record_audio():
+def record_audio(input_device_index=None, input_gain=1.0):
     audio = pyaudio.PyAudio()
 
     stream = audio.open(format=pyaudio.paInt16,
                         channels=1,
                         rate=SAMPLE_RATE,
                         input=True,
+                        input_device_index=input_device_index,
                         frames_per_buffer=1024)
     
     #Recording process: The code prints "Reocording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
