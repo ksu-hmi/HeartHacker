@@ -9,7 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # Constants for audio recording including sample rate and the recording duration
 
 SAMPLE_RATE = 44100  # Sample rate in Hz
-RECORDING_DURATION = 20  # Duration of recording in seconds
+RECORDING_DURATION = 10  # Duration of recording in seconds
 
 # Global variable to check if recording is in progress
 is_recording = False
@@ -85,6 +85,7 @@ def detect_heart_rate(audio_data, sample_rate):
     if global_plot_canvas:
         global_plot_canvas.get_tk_widget().destroy()  # Destroy previous canvas
     global_plot_canvas = FigureCanvasTkAgg(fig, master=root)
+    global_plot_canvas.draw()
     global_plot_canvas.get_tk_widget().pack()
 
     # Find peaks in the audio waveform
@@ -110,8 +111,8 @@ result_label = tk.Label(root, text="")
 result_label.pack(pady=10)
 
 # Create a canvas for embedding the matplotlib plot
-plot_canvas = FigureCanvasTkAgg(plt.figure(), master=root)
-plot_canvas.get_tk_widget().pack()
+plot_canvas = tk.Canvas(root)
+plot_canvas.pack()
 
 # Start the GUI event loop
 root.mainloop()
