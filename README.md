@@ -9,7 +9,7 @@ Heart Hacker is a digital stethoscope that allows healthcare professionals and l
 ## Requirements
 
 - Python 3.x
-- `pyaudio`, `numpy`, `wavio`, `matplotlib`, and `tkinter` libraries. You can install them using the following command:
+- `pyaudio`, `numpy`, `wavio`, `matplotlib`, and `tkinter` libraries. 
 
 ## Contributor
 Caroline Lazaro (https://github.com/lazarocf)
