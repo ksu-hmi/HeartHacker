@@ -7,17 +7,18 @@
 - [x] https://github.com/YangChuan80/AusculPi-Console
 - [x] https://github.com/Nyceane/Digital-Stethoscope-AI.git
 - [x] Evaluate existing code and submit updates to the projectroadmap.md file explaining the findings
-- [ ] 
+- [x] 
  Through my evalutation of the above code, both projects include high level code that currently at my skill level I will not be able to fully emulate. I have decided to begin with a very rudimentary version of the "Digital Stethoscope AI" audio recording code and begin from there. 
 - [x] Attempt to run code with updates
 ## Sprint 2
 - [x] Create audio recording code 
 - [x] Determine which hardware will be used to create stethoscope
 - [x] Build stethoscope
-- [ ] Create a heart detection algorithm
-- [ ] Create a recording visualization
-- [ ] Make updates and add commit messages in the repository
-- [ ] Track progress on planned and emerging tasks in projectroadmap.md document.
+- [x] Create a heart detection function: Created a heartrate detection function. It is currently not working optimally. I might need to work on the hardware sensitivity as well as removing background noise.
+- [x] Create a recording visualization: Created a Time-Domain signal plot.
+- [x] Create a record button GUI
+- [x] Make updates and add commit messages in the repository
+- [x] Track progress on planned and emerging tasks in projectroadmap.md document.
 ## Sprint 3
 - [ ] Continue coding, refining, and testing
 - [ ] Create Powerpoint introducing project
