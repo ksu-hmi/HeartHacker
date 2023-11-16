@@ -4,6 +4,7 @@ import numpy as np
 import wavio  
 import tkinter as tk
 from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
  
 # Constants for audio recording including sample rate and the recording duration
 
@@ -60,11 +61,14 @@ from scipy.signal import find_peaks
 def detect_heart_rate(audio_data, sample_rate):
     # Plot the time-domain signal (audio waveform)
     time = np.arange(0, len(audio_data)) / sample_rate
+    fig, ax = plt.subplots()
     plt.plot(time, audio_data)
     plt.xlabel('Time (seconds)')
     plt.ylabel('Amplitude')
     plt.title('Time-Domain Signal (Audio Waveform)')
     plt.show()
+    plot_canvas.draw()
+
 
     # Find peaks in the audio waveform
     peaks, _ = find_peaks(audio_data, height=0)
@@ -72,7 +76,9 @@ def detect_heart_rate(audio_data, sample_rate):
     # Calculate heart rate based on the detected peaks
     heart_rate = 60 / np.diff(time[peaks]).mean()  # Calculate heart rate from time intervals between peaks
     
-    return heart_rate
+    # Display heart rate on the GUI
+    result_label.config(text=f"Detected Heart Rate: {heart_rate:.2f} beats per minute")
+
 
 # Function to start recording
 def start_recording():
@@ -80,8 +86,7 @@ def start_recording():
     is_recording = True
     audio_data = record_audio()
     is_recording = False
-    heart_rate = detect_heart_rate(audio_data, SAMPLE_RATE)
-    print(f"Detected Heart Rate: {heart_rate} beats per minute")
+    detect_heart_rate(audio_data, SAMPLE_RATE, plot_canvas)
 
 # GUI setup
 root = tk.Tk()
@@ -90,6 +95,14 @@ root.title("Heart Rate Recorder")
 # Create a button to start recording
 start_button = tk.Button(root, text="Start Recording", command=start_recording)
 start_button.pack(pady=10)
+
+# Create a label to display the result
+result_label = tk.Label(root, text="")
+result_label.pack(pady=10)
+
+# Create a canvas for embedding the matplotlib plot
+plot_canvas = FigureCanvasTkAgg(plt.figure(), master=root)
+plot_canvas.get_tk_widget().pack()
 
 # Start the GUI event loop
 root.mainloop()
