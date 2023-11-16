@@ -50,6 +50,19 @@ def record_audio(input_device_index=None, input_gain=1.0):
 
     return np.frombuffer(b''.join(frames), dtype=np.int16)
 
+# Create a global variable for plot_canvas
+global_plot_canvas = None
+
+
+# Function to start recording
+def start_recording():
+    global is_recording
+    global global_plot_canvas  # Declare global variable
+    is_recording = True
+    audio_data = record_audio()
+    is_recording = False
+    detect_heart_rate(audio_data, SAMPLE_RATE, plot_canvas)
+
 
 ######################################
 
@@ -59,16 +72,20 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 def detect_heart_rate(audio_data, sample_rate):
+    global global_plot_canvas  # Access global variable
     # Plot the time-domain signal (audio waveform)
     time = np.arange(0, len(audio_data)) / sample_rate
     fig, ax = plt.subplots()
-    plt.plot(time, audio_data)
-    plt.xlabel('Time (seconds)')
-    plt.ylabel('Amplitude')
-    plt.title('Time-Domain Signal (Audio Waveform)')
-    plt.show()
-    plot_canvas.draw()
+    ax.plot(time, audio_data)
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Amplitude')
+    ax.set_title('Time-Domain Signal (Audio Waveform)')
 
+# Check if global_plot_canvas is set
+    if global_plot_canvas:
+        global_plot_canvas.get_tk_widget().destroy()  # Destroy previous canvas
+    global_plot_canvas = FigureCanvasTkAgg(fig, master=root)
+    global_plot_canvas.get_tk_widget().pack()
 
     # Find peaks in the audio waveform
     peaks, _ = find_peaks(audio_data, height=0)
@@ -79,14 +96,6 @@ def detect_heart_rate(audio_data, sample_rate):
     # Display heart rate on the GUI
     result_label.config(text=f"Detected Heart Rate: {heart_rate:.2f} beats per minute")
 
-
-# Function to start recording
-def start_recording():
-    global is_recording
-    is_recording = True
-    audio_data = record_audio()
-    is_recording = False
-    detect_heart_rate(audio_data, SAMPLE_RATE, plot_canvas)
 
 # GUI setup
 root = tk.Tk()
