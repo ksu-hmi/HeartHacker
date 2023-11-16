@@ -57,11 +57,11 @@ global_plot_canvas = None
 # Function to start recording
 def start_recording():
     global is_recording
-    global global_plot_canvas  # Declare global variable
+    global global_plot_canvas
     is_recording = True
     audio_data = record_audio()
     is_recording = False
-    detect_heart_rate(audio_data, SAMPLE_RATE, plot_canvas)
+    detect_heart_rate(audio_data, SAMPLE_RATE)
 
 
 ######################################
