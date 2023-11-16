@@ -2,14 +2,21 @@
 import pyaudio
 import numpy as np
 import wavio  
+import tkinter as tk
+from tkinter import ttk
  
 # Constants for audio recording including sample rate and the recording duration
 
 SAMPLE_RATE = 44100  # Sample rate in Hz
 RECORDING_DURATION = 20  # Duration of recording in seconds
 
+# Global variable to check if recording is in progress
+is_recording = False
+
+
 #Creating the record_audio function- it initializes a PyAudio object, opens an audio stream with the specified parameters, records audio data for a specified duration and saves it in a list called 'frames'
 def record_audio(input_device_index=None, input_gain=1.0):
+    global is_recording
     audio = pyaudio.PyAudio()
 
     stream = audio.open(format=pyaudio.paInt16,
@@ -19,13 +26,15 @@ def record_audio(input_device_index=None, input_gain=1.0):
                         input_device_index=input_device_index,
                         frames_per_buffer=1024)
     
-    #Recording process: The code prints "Reocording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
+    #Recording process: The code prints "Recording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
 
-#Recording process: The code prints "Reocording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
+#Recording process: The code prints "Recording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
     print("Recording...")
     frames = []
 
     for i in range(0, int(SAMPLE_RATE / 1024 * RECORDING_DURATION)):
+        if not is_recording:
+            break
         data = stream.read(1024)
         frames.append(data)
 
@@ -39,12 +48,6 @@ def record_audio(input_device_index=None, input_gain=1.0):
     audio.terminate()
 
     return np.frombuffer(b''.join(frames), dtype=np.int16)
-
-if __name__ == "__main__":
-    audio_data = record_audio()
-
-# Save the recorded audio to a WAV file
-    wavio.write("recorded_audio.wav", audio_data, SAMPLE_RATE, sampwidth=2)
 
 
 ######################################
@@ -71,9 +74,22 @@ def detect_heart_rate(audio_data, sample_rate):
     
     return heart_rate
 
-if __name__ == "__main__":
+# Function to start recording
+def start_recording():
+    global is_recording
+    is_recording = True
     audio_data = record_audio()
+    is_recording = False
     heart_rate = detect_heart_rate(audio_data, SAMPLE_RATE)
-    
     print(f"Detected Heart Rate: {heart_rate} beats per minute")
 
+# GUI setup
+root = tk.Tk()
+root.title("Heart Rate Recorder")
+
+# Create a button to start recording
+start_button = tk.Button(root, text="Start Recording", command=start_recording)
+start_button.pack(pady=10)
+
+# Start the GUI event loop
+root.mainloop()
