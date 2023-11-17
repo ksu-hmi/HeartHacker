@@ -20,7 +20,9 @@
 - [x] Make updates and add commit messages in the repository
 - [x] Track progress on planned and emerging tasks in projectroadmap.md document.
 ## Sprint 3
+- [ ] Improve audio quality/sensitivity
 - [ ] Continue coding, refining, and testing
+- [ ] Perform QA Testing
 - [ ] Create Powerpoint introducing project
 - [ ] Create tag line that introduces the main concept of what it does/will do
 - [ ] Have two screenshots demonstrating the idea or parts
