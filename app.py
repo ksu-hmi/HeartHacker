@@ -172,7 +172,7 @@ def detect_heart_rate(audio_data, sample_rate):
     global_plot_canvas.get_tk_widget().pack()
 
   # Only consider peaks above or below 5000 amps as heartbeats to cancel out the other noise 
-    peaks, _ = find_peaks(np.abs(audio_data), height=5000)
+    peaks, _ = find_peaks(np.abs(audio_data), height=4000)
 
     # Calculate heart rate based on the detected peaks
     heart_rate = 60 / (2 * np.diff(time[peaks]).mean())
