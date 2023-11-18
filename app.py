@@ -4,7 +4,9 @@ import numpy as np
 import wavio  
 import tkinter as tk
 from tkinter import ttk
+from dataclasses import dataclass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
  
 # Constants for audio recording including sample rate and the recording duration
 
@@ -27,7 +29,6 @@ def record_audio(input_device_index=None, input_gain=1.0):
                         input_device_index=input_device_index,
                         frames_per_buffer=1024)
     
-    #Recording process: The code prints "Recording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
 
 #Recording process: The code prints "Recording" to indicate that audio recording has started. It records the audio in chunks for the specified duration and appends each chunk to the frames list
     print("Recording...")
@@ -53,6 +54,89 @@ def record_audio(input_device_index=None, input_gain=1.0):
 # Create a global variable for plot_canvas
 global_plot_canvas = None
 
+@dataclass
+class FuzzySet:
+    """
+    A class for representing and manipulating triangular fuzzy sets.
+    """
+
+    name: str
+    left_boundary: float
+    peak: float
+    right_boundary: float
+
+    def __str__(self) -> str:
+        return f"{self.name}: [{self.left_boundary}, {self.peak}, {self.right_boundary}]"
+
+    def complement(self) -> 'FuzzySet':
+        return FuzzySet(
+            f"¬{self.name}",
+            1 - self.right_boundary,
+            1 - self.left_boundary,
+            1 - self.peak,
+        )
+
+    def intersection(self, other) -> 'FuzzySet':
+        return FuzzySet(
+            f"{self.name} ∩ {other.name}",
+            max(self.left_boundary, other.left_boundary),
+            min(self.right_boundary, other.right_boundary),
+            (self.peak + other.peak) / 2,
+        )
+
+    def membership(self, x: float) -> float:
+        if x <= self.left_boundary or x >= self.right_boundary:
+            return 0.0
+        elif self.left_boundary < x <= self.peak:
+            return (x - self.left_boundary) / (self.peak - self.left_boundary)
+        elif self.peak < x < self.right_boundary:
+            return (self.right_boundary - x) / (self.right_boundary - self.peak)
+        msg = f"Invalid value {x} for fuzzy set {self}"
+        raise ValueError(msg)
+
+    def union(self, other) -> 'FuzzySet':
+        return FuzzySet(
+            f"{self.name} ∪ {other.name}",
+            min(self.left_boundary, other.left_boundary),
+            max(self.right_boundary, other.right_boundary),
+            (self.peak + other.peak) / 2,
+        )
+
+    def plot(self):
+        x = np.linspace(0, 1, 1000)
+        y = [self.membership(xi) for xi in x]
+
+        plt.plot(x, y, label=self.name)
+
+
+class HeartRateFuzzySystem:
+    def __init__(self):
+        self.high_peak = FuzzySet("HighPeak", 0.7, 1, 1)
+        self.low_amplitude = FuzzySet("LowAmplitude", 0, 0.3, 0.5)
+        self.low_rate = FuzzySet("LowRate", 0, 0, 0.3)
+        self.medium_rate = FuzzySet("MediumRate", 0.2, 0.5, 0.8)
+        self.high_rate = FuzzySet("HighRate", 0.7, 1, 1)
+
+    def infer_heart_rate(self, peak, amplitude):
+        high_peak_membership = self.high_peak.membership(peak)
+        low_amplitude_membership = self.low_amplitude.membership(amplitude)
+
+        low_rate = min(high_peak_membership, low_amplitude_membership)
+        medium_rate = min(high_peak_membership, 1 - low_amplitude_membership)
+        high_rate = 1 - low_rate - medium_rate
+
+        result = (
+            low_rate * self.low_rate.peak
+            + medium_rate * self.medium_rate.peak
+            + high_rate * self.high_rate.peak
+        ) / (low_rate + medium_rate + high_rate)
+
+        return result
+
+
+# Global variable for fuzzy system
+fuzzy_system = HeartRateFuzzySystem()
+
 
 # Function to start recording
 def start_recording():
@@ -72,14 +156,13 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 def detect_heart_rate(audio_data, sample_rate):
-    global global_plot_canvas  # Access global variable
-    # Plot the time-domain signal (audio waveform)
+    global global_plot_canvas, fuzzy_system
     time = np.arange(0, len(audio_data)) / sample_rate
     fig, ax = plt.subplots()
     ax.plot(time, audio_data)
     ax.set_xlabel('Time (seconds)')
     ax.set_ylabel('Amplitude')
-    ax.set_title('Time-Domain Signal (Audio Waveform)')
+    ax.set
 
 # Check if global_plot_canvas is set
     if global_plot_canvas:
