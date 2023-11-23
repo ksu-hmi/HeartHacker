@@ -6,6 +6,8 @@ import tkinter as tk
 from tkinter import ttk
 from dataclasses import dataclass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tempfile
+import tensorflow as tf
 
  
 # Constants for audio recording including sample rate and the recording duration
@@ -137,19 +139,6 @@ class HeartRateFuzzySystem:
 # Global variable for fuzzy system
 fuzzy_system = HeartRateFuzzySystem()
 
-
-# Function to start recording
-def start_recording():
-    global is_recording
-    global global_plot_canvas
-    is_recording = True
-    audio_data = record_audio()
-    is_recording = False
-    detect_heart_rate(audio_data, SAMPLE_RATE)
-
-
-######################################
-
 #HeartRate Detection Function 
 
 import matplotlib.pyplot as plt
@@ -180,7 +169,34 @@ def detect_heart_rate(audio_data, sample_rate):
     # Display heart rate on the GUI
     result_label.config(text=f"Detected Heart Rate: {heart_rate:.2f} beats per minute")
 
+   # Save the recorded audio as a temporary WAVE file
+    temp_wav_file = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
+    wavio.write(temp_wav_file.name, audio_data, sample_rate, sampwidth=3)
+ # Run the TensorFlow script for audio classification
+    labels_file = "path/to/your/labels.txt"  # Update with the correct path
+    graph_file = "path/to/your/model.pb"  # Update with the correct path
 
+    tf.compat.v1.flags.DEFINE_string("wav", temp_wav_file.name, "Path to the recorded audio file.")
+    tf.compat.v1.flags.DEFINE_string("labels", labels_file, "Path to the file containing labels.")
+    tf.compat.v1.flags.DEFINE_string("graph", graph_file, "Path to the frozen graph file.")
+    tf.compat.v1.flags.DEFINE_string("input_name", "wav_data:0", "Name of WAVE data input node in model.")
+    tf.compat.v1.flags.DEFINE_string("output_name", "labels_softmax:0", "Name of node outputting a prediction in the model.")
+    tf.compat.v1.flags.DEFINE_integer("how_many_labels", 3, "Number of results to show.")
+
+    FLAGS = tf.compat.v1.flags.FLAGS
+
+    label_wav(FLAGS.wav, FLAGS.labels, FLAGS.graph, FLAGS.input_name, FLAGS.output_name, FLAGS.how_many_labels)
+
+    temp_wav_file.close()
+
+# Function to start recording
+def start_recording():
+    global is_recording
+    global global_plot_canvas
+    is_recording = True
+    audio_data = record_audio()
+    is_recording = False
+    detect_heart_rate(audio_data, SAMPLE_RATE)
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
