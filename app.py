@@ -187,8 +187,12 @@ def detect_heart_rate(audio_data, sample_rate):
 
     label_wav(FLAGS.wav, FLAGS.labels, FLAGS.graph, FLAGS.input_name, FLAGS.output_name, FLAGS.how_many_labels)
 
-    temp_wav_file.close()
 
+    temp_wav_file.close()
+def label_wav(wav, labels, graph, input_name, output_name, how_many_labels):
+    # Add your code for audio classification here
+    # This function should load the TensorFlow model and classify the audio
+    pass
 # Function to start recording
 def start_recording():
     global is_recording
