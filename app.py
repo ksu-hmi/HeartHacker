@@ -11,6 +11,9 @@ import tensorflow as tf
 from urllib.request import urlopen
 from PIL import Image, ImageTk
 from io import BytesIO
+import ssl
+
+ssl._create_default_https_context = ssl._create_default_https_context
 
 
  
