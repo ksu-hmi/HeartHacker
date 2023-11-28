@@ -228,7 +228,12 @@ root.title("Heart Rate Recorder")
 # Loading the logo image from GitHub
 logo_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/HeartHacker.png'
 logo_image_bytes = urlopen(logo_url, context=ssl_context).read()
-logo_image = ImageTk.PhotoImage(Image.open(BytesIO(logo_image_bytes)))
+logo_image = Image.open(BytesIO(logo_image_bytes))
+# Setting desired width and height for resizing
+width, height = 200, 200
+logo_image = logo_image.resize((width, height), Image.ANTIALIAS)
+logo_image = ImageTk.PhotoImage(logo_image)
+
 
 # Create a label for the logo image
 logo_label = tk.Label(root, image=logo_image)
