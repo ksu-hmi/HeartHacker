@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tempfile
 import tensorflow as tf
+from urllib.request import urlopen
+from PIL import Image, ImageTk
+from io import BytesIO
+
 
  
 # Constants for audio recording including sample rate and the recording duration
@@ -151,7 +155,7 @@ def detect_heart_rate(audio_data, sample_rate):
     ax.plot(time, audio_data)
     ax.set_xlabel('Time (seconds)')
     ax.set_ylabel('Amplitude')
-    ax.set
+    ax.set_title('Audio Signal') 
 
 # Check if global_plot_canvas is set
     if global_plot_canvas:
@@ -204,6 +208,15 @@ def start_recording():
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
+
+# Loading the logo image from GitHub
+logo_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/HeartHacker.png'
+logo_image_bytes = urlopen(logo_url).read()
+logo_image = ImageTk.PhotoImage(Image.open(BytesIO(logo_image_bytes)))
+
+# Create a label for the logo image
+logo_label = tk.Label(root, image=logo_image)
+logo_label.pack(pady=10)
 
 # Create a button to start recording
 start_button = tk.Button(root, text="Start Recording", command=start_recording)
