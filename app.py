@@ -232,7 +232,7 @@ logo_image = Image.open(BytesIO(logo_image_bytes))
 
 # Setting desired width and height for resizing
 width, height = 200, 200
-logo_image = logo_image.resize((width, height), Image.ANTIALIAS)  # Use 'ANTIALIAS' in uppercase
+logo_image = logo_image.resize((width, height), Image.ANTIALIAS)
 
 logo_image = ImageTk.PhotoImage(logo_image)
 
