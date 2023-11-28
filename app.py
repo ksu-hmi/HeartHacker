@@ -12,13 +12,15 @@ from urllib.request import urlopen
 from PIL import Image, ImageTk
 from io import BytesIO
 import ssl
+import matplotlib.pyplot as plt
 
 ssl._create_default_https_context = ssl._create_default_https_context
 
+# Set the path to the CA bundle
+cafile = "/etc/ssl/cert.pem"
+ssl_context = ssl.create_default_context(cafile=cafile)
 
- 
 # Constants for audio recording including sample rate and the recording duration
-
 SAMPLE_RATE = 44100  # Sample rate in Hz
 RECORDING_DURATION = 10  # Duration of recording in seconds
 
@@ -214,7 +216,7 @@ root.title("Heart Rate Recorder")
 
 # Loading the logo image from GitHub
 logo_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/HeartHacker.png'
-logo_image_bytes = urlopen(logo_url).read()
+logo_image_bytes = urlopen(logo_url, context=ssl_context).read()
 logo_image = ImageTk.PhotoImage(Image.open(BytesIO(logo_image_bytes)))
 
 # Create a label for the logo image
