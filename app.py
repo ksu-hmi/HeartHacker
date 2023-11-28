@@ -26,6 +26,7 @@ RECORDING_DURATION = 10  # Duration of recording in seconds
 
 # Global variable to check if recording is in progress
 is_recording = False
+global_plot_canvas = None
 
 
 #Creating the record_audio function- it initializes a PyAudio object, opens an audio stream with the specified parameters, records audio data for a specified duration and saves it in a list called 'frames'
@@ -61,9 +62,6 @@ def record_audio(input_device_index=None, input_gain=1.0):
     audio.terminate()
 
     return np.frombuffer(b''.join(frames), dtype=np.int16)
-
-# Create a global variable for plot_canvas
-global_plot_canvas = None
 
 @dataclass
 class FuzzySet:
@@ -210,6 +208,19 @@ def start_recording():
     audio_data = record_audio()
     is_recording = False
     detect_heart_rate(audio_data, SAMPLE_RATE)
+
+    # Function to restart the process
+def restart_process():
+    global global_plot_canvas, result_label
+    # Destroy the previous plot canvas
+    if global_plot_canvas:
+        global_plot_canvas.get_tk_widget().destroy()
+        global_plot_canvas = None
+    # Clear the result label
+    result_label.config(text="")
+    # Restart recording
+    start_recording()
+
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
@@ -224,8 +235,12 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Create a button to start recording
-start_button = tk.Button(root, text="Start Recording", command=start_recording)
+start_button = tk.Button(root, text="Recording", command=start_recording)
 start_button.pack(pady=10)
+
+# Create a button to restart the process
+restart_button = tk.Button(root, text="Restart", command=restart_process)
+restart_button.pack(pady=10)
 
 # Create a label to display the result
 result_label = tk.Label(root, text="")
