@@ -4,6 +4,7 @@ import numpy as np
 import wavio  
 import tkinter as tk
 from tkinter import ttk
+from tkinter import PhotoImage
 from dataclasses import dataclass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tempfile
@@ -251,8 +252,8 @@ logo_label.pack(pady=10)
 
 # Resize the images for buttons
 width, height = 100, 50  # Adjust the width and height as needed
-recording_button_image = recording_button_image.resize((width, height))
-restart_button_image = restart_button_image.resize((width, height))
+recording_button_image = PhotoImage(file=Image.open(BytesIO(recording_button_image_bytes)).resize((width, height)))
+restart_button_image = PhotoImage(file=Image.open(BytesIO(restart_button_image_bytes)).resize((width, height)))
 
 # Create a button to start recording
 start_button = tk.Button(root, image=ImageTk.PhotoImage(recording_button_image), command=start_recording)
