@@ -1,19 +1,28 @@
 # Heart Hacker - Digital Stethoscope
 
-This Python script records audio and detects the heart rate using Fast Fourier Transform (FFT) analysis. It utilizes the PyAudio library for audio recording, NumPy for data manipulation, and SciPy for peak detection.
+Heart Hacker is a Python application that allows users to record audio and detect the heart rate based on the recorded audio signal. The heart rate is inferred using a fuzzy system and displayed on the graphical user interface (GUI).
 
-## Prerequisites
+## Features
+
+- **Audio Recording:** Utilizes the PyAudio library to record audio from a low-cost microphone or the default input device.
+- **Heart Rate Detection:** Analyzes the recorded audio signal to detect heart rate using a fuzzy system.
+- **Graphical User Interface (GUI):** Provides a simple GUI for user interaction and displaying the recorded audio signal and detected heart rate.
+
 
 - Python 3.x
-- Install required Python packages:
+- Dependencies (Install using `pip install -r requirements.txt`):
+  - PyAudio
+  - NumPy
+  - Wavio
+  - Tkinter
+  - Matplotlib
+  - TensorFlow
+  - Pillow (PIL)
 
-  ```bash
-  pip install pyaudio numpy scipy matplotlib
-  ```
 #Hardware 
 
-- Mictrophone: PRO SIGNAL NPA415-OMNI Microphone or equivalent
-- Stethoscope Head
+- Microphone: PRO SIGNAL NPA415-OMNI Microphone or equivalent
+- For Mac Laptops: USB Type C to 3.5mm Headphone Jack Adapter & TRS-TRRS Adapter
 
 ## Usage
 
@@ -38,13 +47,6 @@ This Python script records audio and detects the heart rate using Fast Fourier T
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/)
-- [NumPy](https://numpy.org/)
-- [SciPy](https://www.scipy.org/)
-- [Matplotlib](https://matplotlib.org/)
 
 ## Contributor
 Caroline Lazaro (https://github.com/lazarocf)
