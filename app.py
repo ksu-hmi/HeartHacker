@@ -260,14 +260,14 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Create labels to display images
-recording_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png', context=ssl_context).read())).resize((50, 50)))
+recording_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png', context=ssl_context).read())).resize((100, 100)))
 recording_label = tk.Label(root, image=recording_label_image)
-recording_label.pack(side=tk.LEFT, padx=5)
+recording_label.pack(side=tk.TOP, pady=10, anchor='center')
 recording_label.bind("<Button-1>", lambda event: start_recording())
 
-restart_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png', context=ssl_context).read())).resize((50, 50)))
+restart_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png', context=ssl_context).read())).resize((100, 100)))
 restart_label = tk.Label(root, image=restart_label_image)
-restart_label.pack(side=tk.LEFT, padx=5)
+restart_label.pack(side=tk.BOTTOM, pady=10, anchor='center')
 restart_label.bind("<Button-1>", lambda event: restart_process())
 
 # Create a label to display the result
