@@ -260,11 +260,15 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Create labels to display images
-recording_label = tk.Label(root, image=None, command=start_recording)
+recording_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png', context=ssl_context).read())).resize((50, 50)))
+recording_label = tk.Label(root, image=recording_label_image)
 recording_label.pack(side=tk.LEFT, padx=5)
+recording_label.bind("<Button-1>", lambda event: start_recording())
 
-restart_label = tk.Label(root, image=None, command=restart_process)
+restart_label_image = ImageTk.PhotoImage(Image.open(BytesIO(urlopen('https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png', context=ssl_context).read())).resize((50, 50)))
+restart_label = tk.Label(root, image=restart_label_image)
 restart_label.pack(side=tk.LEFT, padx=5)
+restart_label.bind("<Button-1>", lambda event: restart_process())
 
 # Create a label to display the result
 result_label = tk.Label(root, text="")
