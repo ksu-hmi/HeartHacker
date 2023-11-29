@@ -251,9 +251,12 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Resize the images for buttons
-width, height = 100, 50  # Adjust the width and height as needed
-recording_button_image = PhotoImage(file=Image.open(BytesIO(recording_button_image_bytes)).resize((width, height)))
-restart_button_image = PhotoImage(file=Image.open(BytesIO(restart_button_image_bytes)).resize((width, height)))
+width, height = 50, 50  # Adjust the width and height as needed
+recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((width, height))
+recording_button_image = ImageTk.PhotoImage(recording_button_image)
+
+restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((width, height))
+restart_button_image = ImageTk.PhotoImage(restart_button_image)
 
 # Create a button to start recording
 start_button = tk.Button(root, image=ImageTk.PhotoImage(recording_button_image), command=start_recording)
