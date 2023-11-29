@@ -222,13 +222,16 @@ def restart_process():
     # Restart recording
     start_recording()
 
-# Create PhotoImage objects outside of functions
-recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((width, height))
+# Create PhotoImage objects outside of functions after creating the Tk() instance
+recording_button_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png'
+recording_button_image_bytes = urlopen(recording_button_url, context=ssl_context).read()
+recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((50, 50))
 recording_button_image = ImageTk.PhotoImage(recording_button_image)
 
-restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((width, height))
+restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png'
+restart_button_image_bytes = urlopen(restart_button_url, context=ssl_context).read()
+restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((50, 50))
 restart_button_image = ImageTk.PhotoImage(restart_button_image)
-
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
