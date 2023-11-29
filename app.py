@@ -55,7 +55,6 @@ def record_audio(input_device_index=None, input_gain=1.0):
 
     print("Recording finished.")
 
-    #After recording is finished, the script stops the audio stream, closes it, and terminates the PyAudio object
 
 #After recording is finished, the script stops the audio stream, closes it, and terminates the PyAudio object
     stream.stop_stream()
@@ -201,10 +200,21 @@ def label_wav(wav, labels, graph, input_name, output_name, how_many_labels):
     # Add your code for audio classification here
     # This function should load the TensorFlow model and classify the audio
     pass
-# Function to start recording
+
+#Function to start recording
 def start_recording():
     global is_recording
     global global_plot_canvas
+
+    # Create PhotoImage for the recording button
+    recording_button_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png'
+    recording_button_image_bytes = urlopen(recording_button_url, context=ssl_context).read()
+    recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((50, 50))
+    recording_button_image = ImageTk.PhotoImage(recording_button_image)
+
+    # Update the label image
+    recording_label.config(image=recording_button_image)
+
     is_recording = True
     audio_data = record_audio()
     is_recording = False
@@ -213,6 +223,16 @@ def start_recording():
     # Function to restart the process
 def restart_process():
     global global_plot_canvas, result_label
+
+    # Create PhotoImage for the restart button
+    restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png'
+    restart_button_image_bytes = urlopen(restart_button_url, context=ssl_context).read()
+    restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((50, 50))
+    restart_button_image = ImageTk.PhotoImage(restart_button_image)
+
+    # Update the label image
+    restart_label.config(image=restart_button_image)
+
     # Destroy the previous plot canvas
     if global_plot_canvas:
         global_plot_canvas.get_tk_widget().destroy()
@@ -222,16 +242,6 @@ def restart_process():
     # Restart recording
     start_recording()
 
-# Create PhotoImage objects outside of functions after creating the Tk() instance
-recording_button_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/start.png'
-recording_button_image_bytes = urlopen(recording_button_url, context=ssl_context).read()
-recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((50, 50))
-recording_button_image = ImageTk.PhotoImage(recording_button_image)
-
-restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png'
-restart_button_image_bytes = urlopen(restart_button_url, context=ssl_context).read()
-restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((50, 50))
-restart_button_image = ImageTk.PhotoImage(restart_button_image)
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
@@ -250,10 +260,10 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Create labels to display images
-recording_label = tk.Label(root, image=recording_button_image, command=start_recording)
+recording_label = tk.Label(root, image=None, command=start_recording)
 recording_label.pack(side=tk.LEFT, padx=5)
 
-restart_label = tk.Label(root, image=restart_button_image, command=restart_process)
+restart_label = tk.Label(root, image=None, command=restart_process)
 restart_label.pack(side=tk.LEFT, padx=5)
 
 # Create a label to display the result
