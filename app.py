@@ -231,15 +231,24 @@ logo_image_bytes = urlopen(logo_url, context=ssl_context).read()
 logo_image = Image.open(BytesIO(logo_image_bytes))
 
 # Setting desired width and height for resizing
-width, height = 200, 200
-logo_image = logo_image.resize((width, height), Image.ANTIALIAS)
-
+width, height = 400, 200
+logo_image = logo_image.resize((width, height))
 logo_image = ImageTk.PhotoImage(logo_image)
+
+# Loading the images for recording and restart buttons from GitHub
+recording_button_url = 'https://github.com/ksu-hmi/HeartHacker/blob/main/start.png'
+recording_button_bytes = urlopen(recording_button_url, context=ssl_context).read()
+recording_button_image = Image.open(BytesIO(recording_button_bytes))
+recording_button_image = ImageTk.PhotoImage(recording_button_image)
+
+restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/blob/main/restart.png'
+restart_button_bytes = urlopen(restart_button_url, context=ssl_context).read()
+restart_button_image = Image.open(BytesIO(restart_button_bytes))
+restart_button_image = ImageTk.PhotoImage(restart_button_image)
 
 # Create a label for the logo image
 logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
-
 
 # Create a button to start recording
 start_button = tk.Button(root, text="Recording", command=start_recording)
