@@ -222,6 +222,13 @@ def restart_process():
     # Restart recording
     start_recording()
 
+# Create PhotoImage objects outside of functions
+recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((width, height))
+recording_button_image = ImageTk.PhotoImage(recording_button_image)
+
+restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((width, height))
+restart_button_image = ImageTk.PhotoImage(restart_button_image)
+
 # GUI setup
 root = tk.Tk()
 root.title("Heart Rate Recorder")
@@ -235,36 +242,16 @@ width, height = 400, 200
 logo_image = logo_image.resize((width, height))
 logo_image = ImageTk.PhotoImage(logo_image)
 
-# Loading the images for recording and restart buttons from GitHub
-recording_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/start.png'
-recording_button_image_bytes = urlopen(recording_button_url, context=ssl_context).read()
-recording_button_image = Image.open(BytesIO(recording_button_image_bytes))
-recording_button_image = ImageTk.PhotoImage(recording_button_image)
-
-restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png'
-restart_button_image_bytes = urlopen(restart_button_url, context=ssl_context).read()
-restart_button_image = Image.open(BytesIO(restart_button_image_bytes))
-restart_button_image = ImageTk.PhotoImage(restart_button_image)
-
 # Create a label for the logo image
 logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
-# Resize the images for buttons
-width, height = 50, 50  # Adjust the width and height as needed
-recording_button_image = Image.open(BytesIO(recording_button_image_bytes)).resize((width, height))
-recording_button_image = ImageTk.PhotoImage(recording_button_image)
+# Create labels to display images
+recording_label = tk.Label(root, image=recording_button_image, command=start_recording)
+recording_label.pack(side=tk.LEFT, padx=5)
 
-restart_button_image = Image.open(BytesIO(restart_button_image_bytes)).resize((width, height))
-restart_button_image = ImageTk.PhotoImage(restart_button_image)
-
-# Create a button to start recording
-start_button = tk.Button(root, image=ImageTk.PhotoImage(recording_button_image), command=start_recording)
-start_button.pack(side=tk.LEFT, padx=5)
-
-# Create a button to restart the process
-restart_button = tk.Button(root, image=ImageTk.PhotoImage(restart_button_image), command=restart_process)
-restart_button.pack(side=tk.LEFT, padx=5)
+restart_label = tk.Label(root, image=restart_button_image, command=restart_process)
+restart_label.pack(side=tk.LEFT, padx=5)
 
 # Create a label to display the result
 result_label = tk.Label(root, text="")
