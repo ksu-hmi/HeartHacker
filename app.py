@@ -236,11 +236,13 @@ logo_image = ImageTk.PhotoImage(logo_image)
 
 # Loading the images for recording and restart buttons from GitHub
 recording_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/start.png'
-recording_button_image = Image.open(BytesIO(urlopen(recording_button_url, context=ssl_context).read()))
+recording_button_image_bytes = urlopen(recording_button_url, context=ssl_context).read()
+recording_button_image = Image.open(BytesIO(recording_button_image_bytes))
 recording_button_image = ImageTk.PhotoImage(recording_button_image)
 
 restart_button_url = 'https://github.com/ksu-hmi/HeartHacker/raw/main/restart.png'
-restart_button_image = Image.open(BytesIO(urlopen(restart_button_url, context=ssl_context).read()))
+restart_button_image_bytes = urlopen(restart_button_url, context=ssl_context).read()
+restart_button_image = Image.open(BytesIO(restart_button_image_bytes))
 restart_button_image = ImageTk.PhotoImage(restart_button_image)
 
 # Create a label for the logo image
