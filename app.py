@@ -230,8 +230,8 @@ logo_url = 'https://raw.githubusercontent.com/ksu-hmi/HeartHacker/main/HeartHack
 logo_image_bytes = urlopen(logo_url, context=ssl_context).read()
 logo_image = Image.open(BytesIO(logo_image_bytes))
 # Setting desired width and height for resizing
-width, height = 200, 200
-logo_image = logo_image.resize((width, height), Image.ANTIALIAS)
+width, height = 400, 200
+logo_image = logo_image.resize((width, height))
 logo_image = ImageTk.PhotoImage(logo_image)
 
 # Loading the images for recording and restart buttons from GitHub
