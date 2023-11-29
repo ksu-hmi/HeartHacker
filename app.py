@@ -250,16 +250,16 @@ logo_label = tk.Label(root, image=logo_image)
 logo_label.pack(pady=10)
 
 # Resize the images for buttons
-width, height = 50, 50  # Adjust the width and height as needed
-recording_button_image = ImageTk.PhotoImage(recording_button_image.resize((width, height)))
-restart_button_image = ImageTk.PhotoImage(restart_button_image.resize((width, height)))
+width, height = 100, 50  # Adjust the width and height as needed
+recording_button_image = recording_button_image.resize((width, height))
+restart_button_image = restart_button_image.resize((width, height))
 
 # Create a button to start recording
-start_button = tk.Button(root, image=recording_button_image, command=start_recording)
+start_button = tk.Button(root, image=ImageTk.PhotoImage(recording_button_image), command=start_recording)
 start_button.pack(side=tk.LEFT, padx=5)
 
 # Create a button to restart the process
-restart_button = tk.Button(root, image=restart_button_image, command=restart_process)
+restart_button = tk.Button(root, image=ImageTk.PhotoImage(restart_button_image), command=restart_process)
 restart_button.pack(side=tk.LEFT, padx=5)
 
 # Create a label to display the result
