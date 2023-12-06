@@ -20,11 +20,11 @@
 - [x] Make updates and add commit messages in the repository
 - [x] Track progress on planned and emerging tasks in projectroadmap.md document.
 ## Sprint 3
-- [ ] Improve audio quality/sensitivity
-- [ ] Continue coding, refining, and testing
-- [ ] Perform QA Testing
-- [ ] Create Powerpoint introducing project
-- [ ] Create tag line that introduces the main concept of what it does/will do
-- [ ] Have two screenshots demonstrating the idea or parts
-- [ ] Upload Powerpoint slide in D2L
-- [ ] Have a copy in the Github repository
+- [x] Improve audio quality/sensitivity
+- [x] Continue coding, refining, and testing
+- [x] Perform QA Testing
+- [x] Create Powerpoint introducing project
+- [x] Create tag line that introduces the main concept of what it does/will do
+- [x] Have two screenshots demonstrating the idea or parts
+- [x] Upload Powerpoint slide in D2L
+- [x] Have a copy in the Github repository
